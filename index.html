@@ -9,42 +9,27 @@
 <body>
   <div id="app">
 
-    <!-- ── Landing ── -->
+    <!-- Landing -->
     <section id="landing">
-      <header class="hero">
-        <div class="hero-terminal" id="hero-terminal" aria-hidden="true">
-          <div class="term-bar">
-            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            <span class="term-title">bash</span>
-          </div>
-          <div class="term-body" id="hero-lines"></div>
-        </div>
-        <div class="hero-text">
-          <div class="badge">Live C++ in the Browser</div>
-          <h1>Terminal <em>Showcase</em></h1>
-          <p>Five C++ programs — real source code, real execution, zero plugins.</p>
-        </div>
-      </header>
+      <h1>C++ Terminal Showcase</h1>
+      <p>Five interactive C++ programs — click one to run it in your browser.</p>
       <div id="cards-grid" class="cards-grid"></div>
     </section>
 
-    <!-- ── Project view ── -->
+    <!-- Project view -->
     <section id="project-view" class="hidden">
       <nav class="topnav">
-        <button id="back-btn" class="back-btn">&#8592; All Projects</button>
+        <button id="back-btn" class="back-btn">← Back</button>
         <span id="nav-title" class="nav-title"></span>
-        <span class="lang-badge">C++17</span>
+        <span class="lang-badge">C++</span>
       </nav>
 
       <div class="split">
         <!-- Left: source code -->
         <div class="pane code-pane">
           <div class="pane-header">
-            <div class="wm-dots">
-              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            </div>
             <span class="pane-title">source.cpp</span>
-            <button id="copy-btn" class="icon-btn" title="Copy source">⎘ Copy</button>
+            <button id="copy-btn" class="icon-btn">Copy</button>
           </div>
           <pre id="code-pre"><code id="code-display" class="language-cpp"></code></pre>
         </div>
@@ -52,11 +37,8 @@
         <!-- Right: terminal -->
         <div class="pane term-pane">
           <div class="pane-header">
-            <div class="wm-dots">
-              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-            </div>
             <span class="pane-title" id="term-title">terminal</span>
-            <button id="clear-btn" class="icon-btn" title="Clear output">&#x2715; Clear</button>
+            <button id="clear-btn" class="icon-btn">Clear</button>
           </div>
           <div class="term-output" id="term-output">
             <pre id="output-pre"></pre>
@@ -64,17 +46,15 @@
           </div>
           <div class="stdin-area">
             <div class="stdin-toolbar">
-              <label class="stdin-label">stdin</label>
+              <span class="stdin-label">stdin</span>
               <span id="stdin-hint" class="stdin-hint"></span>
               <button id="example-btn" class="btn-ghost">Load example</button>
             </div>
             <textarea id="stdin-input" class="stdin-textarea"
-              placeholder="Enter program inputs here (one value per line or space-separated)…"></textarea>
+              placeholder="Enter program inputs here…"></textarea>
             <div class="run-bar">
               <span id="status-msg" class="status-msg"></span>
-              <button id="run-btn" class="run-btn">
-                <span class="run-icon">&#9654;</span> Run Program
-              </button>
+              <button id="run-btn" class="run-btn">▶ Run</button>
             </div>
           </div>
         </div>
