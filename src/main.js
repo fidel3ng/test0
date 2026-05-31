@@ -1,7 +1,7 @@
 import JSCPP from 'JSCPP'
 import hljs from 'highlight.js/lib/core'
 import cpp from 'highlight.js/lib/languages/cpp'
-import 'highlight.js/styles/github-dark.css'
+import 'highlight.js/styles/monokai.css'
 import { projects } from './projects.js'
 
 hljs.registerLanguage('cpp', cpp)
