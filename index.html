@@ -1,37 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>C++ Showcase</title>
-  <link rel="stylesheet" href="/src/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>C++ Terminal Showcase</title>
+  <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body>
-  <div id="landing">
-    <p id="heading">C++ Showcase</p>
-    <div id="list"></div>
-  </div>
+  <div id="app">
 
-  <div id="view" hidden>
-    <div id="nav">
-      <button id="back">← back</button>
-      <span id="vtitle"></span>
-    </div>
-    <div id="split">
-      <pre id="cpre"><code id="code"></code></pre>
-      <div id="term">
-        <pre id="out"></pre>
-        <textarea id="stdin" placeholder="stdin…"></textarea>
-        <div id="bar">
-          <button id="eg">example</button>
-          <button id="clr">clear</button>
-          <button id="run">▶ run</button>
-          <span id="st"></span>
+    <!-- Landing -->
+    <section id="landing">
+      <h1>C++ Terminal Showcase</h1>
+      <p>Five interactive C++ programs — click one to run it in your browser.</p>
+      <div id="cards-grid" class="cards-grid"></div>
+    </section>
+
+    <!-- Project view -->
+    <section id="project-view" class="hidden">
+      <nav class="topnav">
+        <button id="back-btn" class="back-btn">← Back</button>
+        <span id="nav-title" class="nav-title"></span>
+        <span class="lang-badge">C++</span>
+      </nav>
+
+      <div class="split">
+        <!-- Left: source code -->
+        <div class="pane code-pane">
+          <div class="pane-header">
+            <span class="pane-title">source.cpp</span>
+            <button id="copy-btn" class="icon-btn">Copy</button>
+          </div>
+          <pre id="code-pre"><code id="code-display" class="language-cpp"></code></pre>
+        </div>
+
+        <!-- Right: terminal -->
+        <div class="pane term-pane">
+          <div class="pane-header">
+            <span class="pane-title" id="term-title">terminal</span>
+            <button id="clear-btn" class="icon-btn">Clear</button>
+          </div>
+          <div class="term-output" id="term-output">
+            <pre id="output-pre"></pre>
+          </div>
+          <div class="stdin-area">
+            <div class="stdin-toolbar">
+              <span class="stdin-label">stdin</span>
+              <span id="stdin-hint" class="stdin-hint"></span>
+              <button id="example-btn" class="btn-ghost">Load example</button>
+            </div>
+            <textarea id="stdin-input" class="stdin-textarea"
+              placeholder="Enter program inputs here…"></textarea>
+            <div class="run-bar">
+              <span id="status-msg" class="status-msg"></span>
+              <button id="run-btn" class="run-btn">▶ Run</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
+  </div>
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>

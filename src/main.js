@@ -6,60 +6,133 @@ import { projects } from './projects.js'
 
 hljs.registerLanguage('cpp', cpp)
 
-const $ = id => document.getElementById(id)
-let cur = null
+let currentProject = null
 
-for (const p of projects) {
-  const dc = p.difficulty.toLowerCase().replace(/[^a-z]/g, '')
-  const d = document.createElement('div')
-  d.className = 'row'
-  d.innerHTML = `<span class="rn">${p.title}</span><span class="rd ${dc}">${p.difficulty}</span><span class="rc">${p.description}</span>`
-  d.onclick = () => open(p)
-  $('list').appendChild(d)
+const $landing     = document.getElementById('landing')
+const $projectView = document.getElementById('project-view')
+const $cardsGrid   = document.getElementById('cards-grid')
+const $backBtn     = document.getElementById('back-btn')
+const $navTitle    = document.getElementById('nav-title')
+const $codeDisplay = document.getElementById('code-display')
+const $copyBtn     = document.getElementById('copy-btn')
+const $clearBtn    = document.getElementById('clear-btn')
+const $termOutput  = document.getElementById('term-output')
+const $outputPre   = document.getElementById('output-pre')
+const $stdinInput  = document.getElementById('stdin-input')
+const $stdinHint   = document.getElementById('stdin-hint')
+const $exampleBtn  = document.getElementById('example-btn')
+const $runBtn      = document.getElementById('run-btn')
+const $statusMsg   = document.getElementById('status-msg')
+const $termTitle   = document.getElementById('term-title')
+
+const delay = ms => new Promise(r => setTimeout(r, ms))
+
+// ── Render cards ──────────────────────────────────────────
+function renderCards() {
+  for (const p of projects) {
+    const card = document.createElement('div')
+    card.className = 'card'
+    const diff = p.difficulty.toLowerCase().replace(/[^a-z]/g, '')
+    card.innerHTML = `
+      <div class="card-title">${p.title}</div>
+      <div class="card-diff ${diff}">${p.difficulty}</div>
+      <div class="card-desc">${p.description}</div>`
+    card.addEventListener('click', () => openProject(p))
+    $cardsGrid.appendChild(card)
+  }
 }
 
-function open(p) {
-  cur = p
-  $('vtitle').textContent = p.title
-  $('code').innerHTML = hljs.highlight(p.code, { language: 'cpp' }).value
-  $('out').textContent = `# ${p.hint}\n\n$ ./${p.id}\n`
-  $('stdin').value = ''
-  $('st').textContent = ''
-  $('landing').hidden = true
-  $('view').hidden = false
-  $('stdin').focus()
+// ── Open project ──────────────────────────────────────────
+function openProject(project) {
+  currentProject = project
+  $navTitle.textContent = project.title
+  $termTitle.textContent = project.id
+
+  $codeDisplay.innerHTML = hljs.highlight(project.code, { language: 'cpp' }).value
+
+  resetTerminal()
+  $outputPre.textContent = `# ${project.title}\n# ${project.hint}\n\n$ ./${project.id}\n`
+
+  $landing.classList.add('hidden')
+  $projectView.classList.remove('hidden')
+  window.scrollTo(0, 0)
+  $stdinInput.focus()
 }
 
-$('back').onclick = () => { $('view').hidden = true; $('landing').hidden = false }
-$('eg').onclick  = () => { if (cur) $('stdin').value = cur.exampleInput }
-$('clr').onclick = () => { if (cur) $('out').textContent = `# ${cur.hint}\n\n$ ./${cur.id}\n` }
+function resetTerminal() {
+  $outputPre.textContent = ''
+  $statusMsg.textContent = ''
+  $stdinHint.textContent = currentProject?.hint ?? ''
+  $stdinInput.value = ''
+}
 
-$('run').onclick = async () => {
-  if (!cur) return
-  const input = $('stdin').value.trim()
-  if (!input) { $('st').textContent = 'no input'; return }
+// ── Navigation ────────────────────────────────────────────
+$backBtn.addEventListener('click', () => {
+  $projectView.classList.add('hidden')
+  $landing.classList.remove('hidden')
+  currentProject = null
+})
 
-  $('run').disabled = true
-  $('st').textContent = ''
-  const out = $('out')
-  out.textContent += `\n$ ./${cur.id}\n`
+$copyBtn.addEventListener('click', () => {
+  if (!currentProject) return
+  navigator.clipboard.writeText(currentProject.code).then(() => {
+    $copyBtn.textContent = 'Copied!'
+    setTimeout(() => { $copyBtn.textContent = 'Copy' }, 1500)
+  })
+})
 
-  let res = '', err = ''
+$clearBtn.addEventListener('click', () => {
+  if (currentProject) { resetTerminal(); openProject(currentProject) }
+})
+
+$exampleBtn.addEventListener('click', () => {
+  if (currentProject) $stdinInput.value = currentProject.exampleInput
+})
+
+// ── Run ───────────────────────────────────────────────────
+$runBtn.addEventListener('click', runProgram)
+$stdinInput.addEventListener('keydown', e => { if (e.ctrlKey && e.key === 'Enter') runProgram() })
+
+async function runProgram() {
+  if (!currentProject) return
+  const stdin = $stdinInput.value.trim()
+  if (!stdin) {
+    $statusMsg.textContent = 'stdin is empty'
+    return
+  }
+
+  $runBtn.disabled = true
+  $statusMsg.textContent = ''
+
+  $outputPre.textContent += `\n$ ./${currentProject.id}\n`
+  $termOutput.scrollTop = $termOutput.scrollHeight
+
+  let output = ''
+  let err = ''
   try {
-    JSCPP.run(cur.code, input + '\n', { stdio: { write: s => res += s }, maxTimeout: 10000 })
+    JSCPP.run(currentProject.code, stdin + '\n', {
+      stdio: { write: s => { output += s } },
+      maxTimeout: 10000,
+    })
   } catch (e) {
-    const m = String(e.message ?? e)
-    if (!m.includes('EOF') && !m.includes('exit')) err = m
+    const msg = String(e.message ?? e)
+    if (!msg.includes('EOF') && !msg.includes('exit')) err = msg
   }
 
-  const lines = res.split('\n')
+  const lines = output.split('\n')
   for (let i = 0; i < lines.length; i++) {
-    out.textContent += lines[i] + (i < lines.length - 1 ? '\n' : '')
-    out.scrollTop = out.scrollHeight
-    if (lines[i].trim()) await new Promise(r => setTimeout(r, 18))
+    $outputPre.textContent += lines[i] + (i < lines.length - 1 ? '\n' : '')
+    $termOutput.scrollTop = $termOutput.scrollHeight
+    if (lines[i].trim()) await delay(18)
   }
-  out.textContent += err ? `\n[error] ${err}\n` : '\n[exit 0]\n'
-  out.scrollTop = out.scrollHeight
-  $('run').disabled = false
-  $('st').textContent = err ? '✗' : '✓'
+
+  $outputPre.textContent += err
+    ? `\n[Error] ${err}\n`
+    : '\n[exit 0]\n'
+
+  $termOutput.scrollTop = $termOutput.scrollHeight
+  $runBtn.disabled = false
+  $statusMsg.textContent = err ? 'error' : 'done'
 }
+
+renderCards()
