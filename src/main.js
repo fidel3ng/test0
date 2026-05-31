@@ -18,7 +18,6 @@ const $copyBtn     = document.getElementById('copy-btn')
 const $clearBtn    = document.getElementById('clear-btn')
 const $termOutput  = document.getElementById('term-output')
 const $outputPre   = document.getElementById('output-pre')
-const $cursor      = document.getElementById('cursor')
 const $stdinInput  = document.getElementById('stdin-input')
 const $stdinHint   = document.getElementById('stdin-hint')
 const $exampleBtn  = document.getElementById('example-btn')
@@ -54,11 +53,11 @@ function openProject(project) {
   $landing.classList.add('hidden')
   $projectView.classList.remove('hidden')
   window.scrollTo(0, 0)
+  $stdinInput.focus()
 }
 
 function resetTerminal() {
   $outputPre.textContent = ''
-  $cursor.className = 'cursor blink'
   $statusMsg.textContent = ''
   $stdinHint.textContent = currentProject?.hint ?? ''
   $stdinInput.value = ''
@@ -101,7 +100,6 @@ async function runProgram() {
 
   $runBtn.disabled = true
   $statusMsg.textContent = ''
-  $cursor.className = 'cursor'
 
   $outputPre.textContent += `\n$ ./${currentProject.id}\n`
   $termOutput.scrollTop = $termOutput.scrollHeight
@@ -130,7 +128,6 @@ async function runProgram() {
     : '\n[exit 0]\n'
 
   $termOutput.scrollTop = $termOutput.scrollHeight
-  $cursor.className = 'cursor blink'
   $runBtn.disabled = false
   $statusMsg.textContent = err ? 'error' : 'done'
 }

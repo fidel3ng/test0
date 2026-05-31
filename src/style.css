@@ -102,14 +102,6 @@ body {
   white-space: pre-wrap;
   background: transparent;
 }
-.cursor {
-  display: inline-block;
-  width: 7px; height: 14px;
-  background: #0f0;
-  vertical-align: text-bottom;
-}
-.cursor.blink { animation: blink 1s step-end infinite; }
-@keyframes blink { 50% { opacity: 0; } }
 
 /* Stdin */
 .stdin-area {
