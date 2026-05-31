@@ -56,7 +56,7 @@ function openProject(project) {
   $landing.classList.add('hidden')
   $projectView.classList.remove('hidden')
   window.scrollTo(0, 0)
-  $stdinInput.focus()
+  if (!('ontouchstart' in window)) $stdinInput.focus()
 }
 
 function resetTerminal() {
