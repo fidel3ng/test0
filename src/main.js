@@ -48,8 +48,7 @@ function openProject(project) {
   $navTitle.textContent = project.title
   $termTitle.textContent = project.id
 
-  $codeDisplay.textContent = project.code
-  hljs.highlightElement($codeDisplay)
+  $codeDisplay.innerHTML = hljs.highlight(project.code, { language: 'cpp' }).value
 
   resetTerminal()
   $outputPre.textContent = `# ${project.title}\n# ${project.hint}\n\n$ ./${project.id}\n`

@@ -1,3 +1,6 @@
+import dijkstraCode     from './cpp/dijkstra.cpp?raw'
+import knapsackCode     from './cpp/knapsack.cpp?raw'
+import lcsCode          from './cpp/lcs.cpp?raw'
 import bubbleSortCode   from './cpp/bubble_sort.cpp?raw'
 import caesarCode       from './cpp/caesar_cipher.cpp?raw'
 import primeCode        from './cpp/prime_sieve.cpp?raw'
@@ -10,6 +13,36 @@ import hanoiCode        from './cpp/tower_of_hanoi.cpp?raw'
 import gcdCode          from './cpp/gcd_euclidean.cpp?raw'
 
 export const projects = [
+  {
+    id: 'dijkstra',
+    title: "Dijkstra's Algorithm",
+    subtitle: 'Shortest path in a graph',
+    difficulty: 'Hard',
+    description: 'Find the shortest path from a source node to all others, watching distances update as each node is visited.',
+    code: dijkstraCode,
+    exampleInput: '5\n0 10 0 0 5\n10 0 1 0 2\n0 1 0 4 0\n0 0 4 0 0\n5 2 0 0 0\n0',
+    hint: 'Line 1: node count · Lines 2…n+1: adjacency matrix (0 = no edge) · Last line: source node',
+  },
+  {
+    id: 'knapsack',
+    title: '0/1 Knapsack',
+    subtitle: 'Dynamic programming',
+    difficulty: 'Hard',
+    description: 'Pack items to maximise value without exceeding capacity — see the full DP table and which items were selected.',
+    code: knapsackCode,
+    exampleInput: '10\n4\n2 6\n2 10\n6 12\n5 13',
+    hint: 'Line 1: capacity · Line 2: item count · Lines 3…: weight value per item',
+  },
+  {
+    id: 'lcs',
+    title: 'LCS',
+    subtitle: 'Longest Common Subsequence',
+    difficulty: 'Hard',
+    description: 'Build the DP table for two strings and trace back to find their longest common subsequence.',
+    code: lcsCode,
+    exampleInput: 'ABCBDAB\nBDCAB',
+    hint: 'Line 1: first string (no spaces) · Line 2: second string (no spaces)',
+  },
   {
     id: 'bubble-sort',
     title: 'Bubble Sort',

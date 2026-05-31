@@ -31,6 +31,7 @@ body {
 .card-diff.beginner             { color: #6dbf67; }
 .card-diff.beginnerintermediate { color: #c8a84b; }
 .card-diff.intermediate         { color: #d4845a; }
+.card-diff.hard                 { color: #cf4f4f; }
 .card-desc   { font-size: 0.8rem; color: #aaa; }
 
 /* Top nav */
