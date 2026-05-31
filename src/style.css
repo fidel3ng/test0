@@ -155,3 +155,24 @@ body {
 }
 .run-btn:hover:not(:disabled) { border-color: #aaa; }
 .run-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  #landing { padding: 20px; }
+  .card { width: 100%; }
+
+  .topnav { padding: 6px 10px; gap: 8px; }
+  .lang-badge { display: none; }
+
+  .split {
+    grid-template-columns: 1fr;
+    grid-template-rows: 45vh 55vh;
+    height: auto;
+    min-height: calc(100vh - 37px);
+  }
+  .code-pane { border-right: none; border-bottom: 1px solid #333; }
+
+  #code-pre { font-size: 12px; padding: 12px 14px; }
+  .stdin-textarea { font-size: 12px; }
+  #output-pre { font-size: 12px; }
+}
