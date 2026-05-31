@@ -70,17 +70,23 @@ body {
 .pane-title { flex: 1; }
 .wm-dots { display: none; }
 
-/* Code */
+/* Code panel */
+.code-pane { background: #0d1117; }
+.code-pane .pane-header { background: #161b22; border-color: #30363d; color: #8b949e; }
+
 #code-pre {
   flex: 1;
   overflow: auto;
   margin: 0;
-  padding: 16px;
-  font-size: 13px;
-  line-height: 1.6;
-  background: #0d0d0d;
+  padding: 20px 24px;
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', 'Menlo', monospace;
+  font-size: 13.5px;
+  line-height: 1.7;
+  background: #0d1117;
+  tab-size: 4;
 }
-.hljs { background: transparent !important; }
+#code-display { font-family: inherit; }
+.hljs { background: transparent !important; padding: 0 !important; }
 
 /* Terminal */
 .term-output {
