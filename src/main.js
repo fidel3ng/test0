@@ -50,6 +50,16 @@ function openProject(project) {
 
   $codeDisplay.innerHTML = hljs.highlight(project.code, { language: 'cpp' }).value
 
+  const $codePre = document.getElementById('code-pre')
+  let $gutter = document.getElementById('line-gutter')
+  if (!$gutter) {
+    $gutter = document.createElement('span')
+    $gutter.id = 'line-gutter'
+    $gutter.setAttribute('aria-hidden', 'true')
+    $codePre.insertBefore($gutter, $codeDisplay)
+  }
+  $gutter.innerHTML = project.code.split('\n').map((_, i) => `<span>${i + 1}</span>`).join('')
+
   resetTerminal()
   $outputPre.textContent = `# ${project.title}\n# ${project.hint}\n\n$ ./${project.id}\n`
 
