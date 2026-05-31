@@ -1,0 +1,17 @@
+{
+  "name": "cpp-terminal-showcase",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "JSCPP": "^2.0.9",
+    "highlight.js": "^11.10.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
