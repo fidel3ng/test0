@@ -27,6 +27,10 @@ body {
 }
 .card:hover { border-color: #aaa; }
 .card-title  { font-weight: bold; margin-bottom: 4px; }
+.card-diff   { font-size: 11px; margin-bottom: 6px; }
+.card-diff.beginner             { color: #6dbf67; }
+.card-diff.beginnerintermediate { color: #c8a84b; }
+.card-diff.intermediate         { color: #d4845a; }
 .card-desc   { font-size: 0.8rem; color: #aaa; }
 
 /* Top nav */

@@ -32,7 +32,11 @@ function renderCards() {
   for (const p of projects) {
     const card = document.createElement('div')
     card.className = 'card'
-    card.innerHTML = `<div class="card-title">${p.title}</div><div class="card-desc">${p.description}</div>`
+    const diff = p.difficulty.toLowerCase().replace(/[^a-z]/g, '')
+    card.innerHTML = `
+      <div class="card-title">${p.title}</div>
+      <div class="card-diff ${diff}">${p.difficulty}</div>
+      <div class="card-desc">${p.description}</div>`
     card.addEventListener('click', () => openProject(p))
     $cardsGrid.appendChild(card)
   }
