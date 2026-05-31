@@ -56,7 +56,6 @@ function openProject(project) {
   $landing.classList.add('hidden')
   $projectView.classList.remove('hidden')
   window.scrollTo(0, 0)
-  if (!('ontouchstart' in window)) $stdinInput.focus()
 }
 
 function resetTerminal() {
@@ -82,7 +81,9 @@ $copyBtn.addEventListener('click', () => {
 })
 
 $clearBtn.addEventListener('click', () => {
-  if (currentProject) { resetTerminal(); openProject(currentProject) }
+  if (!currentProject) return
+  resetTerminal()
+  $outputPre.textContent = `# ${currentProject.title}\n# ${currentProject.hint}\n\n$ ./${currentProject.id}\n`
 })
 
 $exampleBtn.addEventListener('click', () => {

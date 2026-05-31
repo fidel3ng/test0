@@ -158,6 +158,8 @@ body {
 
 /* Mobile */
 @media (max-width: 640px) {
+  body { overflow-x: hidden; }
+
   #landing { padding: 20px; }
   .card { width: 100%; }
 
@@ -166,13 +168,13 @@ body {
 
   .split {
     grid-template-columns: 1fr;
-    grid-template-rows: 45vh 55vh;
+    grid-template-rows: 40vh 60vh;
     height: auto;
     min-height: calc(100vh - 37px);
   }
   .code-pane { border-right: none; border-bottom: 1px solid #333; }
 
-  #code-pre { font-size: 10px; padding: 10px 12px; overflow-x: hidden; line-height: 1.6; }
+  #code-pre { font-size: 9.5px; padding: 10px 12px; overflow: hidden; line-height: 1.55; }
   .stdin-textarea { font-size: 12px; }
   #output-pre { font-size: 12px; }
 }
